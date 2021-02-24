@@ -1635,6 +1635,24 @@ ensureDomLoaded(()=>{
 	})
 	domainBypass("droidfilehost.com",()=>{if(typeof wt !== 'undefined')wt=1})
 	//Insertion point for domain-or-href-specific bypasses running after the DOM is loaded. Bypasses here will no longer need to call ensureDomLoaded.
+	domainBypass('kutt.io', () => {
+	    crowdBypass(() => {
+		awaitElement('#go-link', () => {
+		    setInterval(() => {
+			let form = $('#go-link')
+			$.ajax({
+			    dataType: 'json',
+			    type: 'POST',
+			    url: form.attr('action'),
+			    data: form.serialize(),
+			    success: (res) => {
+				contributeAndNavigate(res.url)
+			    }
+			})
+		    }, 8000)
+		})
+	    }, true)
+	})
 	if(bypassed)
 	{
 		return
