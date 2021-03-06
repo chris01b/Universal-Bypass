@@ -1635,35 +1635,35 @@ ensureDomLoaded(()=>{
 	})
 	domainBypass("droidfilehost.com",()=>{if(typeof wt !== 'undefined')wt=1})
 	//Insertion point for domain-or-href-specific bypasses running after the DOM is loaded. Bypasses here will no longer need to call ensureDomLoaded.
-	domainBypass('kutt.io', () => {
-	    // Wait for ReCaptcha
-	    let timer = setInterval(() => {
-		let e = document.querySelector('#invisibleCaptchaShortlink:not([disabled])')
-		if (e) {
-		    e.click();
-		    clearInterval(timer)
-		}
-	    }, 10)
-	    setInterval(() => clearInterval(timer), 30000)
+	domainBypass('kutt.io',()=>{
+	    let timer=setInterval(()=>{
+    		let e=document.querySelector('#invisibleCaptchaShortlink:not([disabled])')
+        		if(e)
+        		{
+        		    e.click();
+        		    clearInterval(timer)
+        		}
+    	    },10)
+	    setInterval(()=>clearInterval(timer),30000)
 
-	    crowdBypass(() => {
-		awaitElement('#go-link', () => {
-		    let timer = setInterval(() => {
-			let form = $('#go-link')
-			$.ajax({
-			    dataType: 'json',
-			    type: 'POST',
-			    url: form.attr('action'),
-			    data: form.serialize(),
-			    success: (res) => {
-				contributeAndNavigate(res.url)
-				clearInterval(timer)
-			    }
-			})
-		    }, 8000)
-		    setInterval(() => clearInterval(timer), 30000)
-		})
-	    }, true)
+	    crowdBypass(()=>{
+    		awaitElement('#go-link',()=>{
+    		    let timer=setInterval(()=>{
+        			let form=$('#go-link')
+        			$.ajax({
+        			    dataType: 'json',
+        			    type: 'POST',
+        			    url: form.attr('action'),
+        			    data: form.serialize(),
+        			    success: res=>{
+            				contributeAndNavigate(res.url)
+            				clearInterval(timer)
+        			    }
+        			})
+    		    },8000)
+    		    setInterval(() => clearInterval(timer), 30000)
+    		})
+	    },true)
 	})
 	if(bypassed)
 	{
